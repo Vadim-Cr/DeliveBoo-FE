@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import AppRestaurantDetails from './pages/AppRestaurantDetails.vue';
-import RestaurantCard from './components/RestaurantCard.vue';
+import QueryRestaurants from './components/QueryRestaurants.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -9,7 +9,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: RestaurantCard
+            component: QueryRestaurants
         },
         {
             path: '/restaurant_typology/:id',

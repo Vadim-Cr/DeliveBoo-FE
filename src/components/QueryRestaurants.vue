@@ -5,7 +5,7 @@ import axios from 'axios';
 const API = "http://localhost:8000/api/v1";
 
 export default {
-  name: 'TestQueryRestaurants',
+  name: 'QueryRestaurants',
   data: function () {
     return {
       restaurants: [],
@@ -41,7 +41,7 @@ export default {
 <template>
   <div>
     <!-- Checkbox per la selezione delle tipologie -->
-    <div>
+    <div class="container d-flex justify-content-center">
       <label
         v-for="typology in ['italiano', 'cinese', 'giapponese', 'messicano', 'indiano', 'francese', 'spagnolo', 'tedesco', 'americano', 'fast food', 'vegetariano', 'vegano']"
         :key="typology">
@@ -51,11 +51,19 @@ export default {
     </div>
 
     <!-- Lista dei ristoranti -->
-    <div v-for="restaurant in restaurants" :key="restaurant.id">
-      <h1>{{ restaurant.activity_name }}</h1>
-      <ul>
-        <li v-for="typology in restaurant.typologies" :key="typology.id">{{ typology.name }}</li>
-      </ul>
+    <div class="container d-flex justify-content-center my-3">
+      <div class="row">
+        <router-link v-for="restaurant in restaurants" :to="{ name: 'restaurantDetail', params: { id: restaurant.id } }"
+          :key="restaurant.id" class="card col-4 p-3">
+          <h1 class='text-center bg-dark text-light p-2 rounded'>
+            {{ restaurant.activity_name }}
+          </h1>
+
+          <ul>
+            <li v-for="typology in restaurant.typologies" :key="typology.id">{{ typology.name }}</li>
+          </ul>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
