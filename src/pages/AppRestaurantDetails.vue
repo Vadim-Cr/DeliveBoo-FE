@@ -22,20 +22,22 @@ export default {
     },
     methods: {
         addToCart(item) {
-            this.cart.push(item);
-            this.updateSessionStorage();
-        },
-        updateSessionStorage() {
-            sessionStorage.setItem('cart', JSON.stringify(this.cart));
+            // Recupera il carrello da sessionStorage
+            const savedCart = sessionStorage.getItem('cart');
+            const cart = savedCart ? JSON.parse(savedCart) : [];
+
+            // Aggiungi il nuovo piatto al carrello
+            cart.push(item);
+
+            // Salva il carrello aggiornato in sessionStorage
+            sessionStorage.setItem('cart', JSON.stringify(cart));
         }
     },
     mounted() {
         const restaurantId = this.$route.params.id;
-        //console.log('ID del ristorante:', restaurantId);
 
         axios.get(`${API}/restaurant_typology/${restaurantId}`)
             .then(response => {
-                //console.log(response.data);
                 this.restaurant = response.data;
             })
             .catch(error => {
@@ -46,6 +48,7 @@ export default {
 </script>
 
 <template>
+    <!-- card ristoranti -->
     <div class="container">
         <div class="row justify-content-center">
             <div class="card col-6">
@@ -64,8 +67,8 @@ export default {
                 </div>
             </div>
         </div>
-
     </div>
+    <!-- carti piatti -->
     <div class="container">
         <div class="row justify-content-center">
             <div class="card col-4 m-3" v-for="dish, idx in restaurant.dishes" :key="dish.id">
@@ -84,7 +87,9 @@ export default {
         </div>
 
     </div>
-    <ShoppingCart :dishes="cart" />
+    <div v-if="$route.name !== 'restaurantDetail'">
+        <ShoppingCart :dishes="cart" />
+    </div>
 </template>
 <style scoped>
 .dishimage {
