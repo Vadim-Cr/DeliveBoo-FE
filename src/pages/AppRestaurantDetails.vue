@@ -21,13 +21,34 @@ export default {
         }
     },
     methods: {
-        addToCart(item) {
+        addToCart(dish) {
             // Recupera il carrello da sessionStorage
             const savedCart = sessionStorage.getItem('cart');
             const cart = savedCart ? JSON.parse(savedCart) : [];
 
-            // Aggiungi il nuovo piatto al carrello
-            cart.push(item);
+            // Verifica se il carrello è vuoto
+            if (cart.length === 0) {
+                // Se il carrello è vuoto, aggiungi il nuovo piatto al carrello
+                cart.push(dish);
+            } else {
+                // Se il carrello contiene già prodotti
+                const restaurantId = dish.restaurant_id; // Sostituisci con il modo in cui ottieni l'ID del ristorante dal nuovo piatto
+                const existingRestaurantId = cart[0].restaurant_id; // Supponendo che il primo piatto nel carrello determini il ristorante
+
+                if (restaurantId === existingRestaurantId) {
+                    // Se stai aggiungendo un piatto dallo stesso ristorante, aggiungi il piatto al carrello
+                    cart.push(dish);
+                } else {
+                    // Se stai cambiando il ristorante, mostra un avviso e chiedi se desideri svuotare il carrello
+                    const confirmMessage = 'Stai cambiando il ristorante. Vuoi svuotare il carrello attuale?';
+                    if (window.confirm(confirmMessage)) {
+                        // Svuota il carrello
+                        cart.length = 0;
+                        // Aggiungi il nuovo piatto al carrello
+                        cart.push(dish);
+                    }
+                }
+            }
 
             // Salva il carrello aggiornato in sessionStorage
             sessionStorage.setItem('cart', JSON.stringify(cart));
