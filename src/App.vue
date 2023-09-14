@@ -14,7 +14,10 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss">
+@use './styles/general.scss' as *;
+@use './styles/partials/variables' as *;
+
 .fa-cart-shopping {
   color: orangered;
   font-size: 2rem;
