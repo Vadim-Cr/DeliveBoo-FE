@@ -1,15 +1,20 @@
 <script>
 import { useRoute } from 'vue-router';
-import { ref, watch } from 'vue'
+import { ref, watch } from 'vue';
+import Payments from './Payments.vue';
 
 export default {
     name: 'ShoppingCart',
+    components: {
+        Payments
+    },
     props: {
         dishes: Array
     },
     data() {
         return {
-            cart: []
+            cart: [],
+            totalAmount: 0,
         };
     },
     methods: {
@@ -19,7 +24,11 @@ export default {
         },
         updateSessionStorage() {
             sessionStorage.setItem('cart', JSON.stringify(this.cart));
-        }
+        },
+        calculateTotal() {
+            this.totalAmount = this.cart.reduce((acc, dish) => acc + dish.price, 0);
+            console.log(this.totalAmount);
+        },
     },
     mounted() {
         // Inizializza il carrello utilizzando i dati da sessionStorage se disponibili
@@ -44,11 +53,18 @@ export default {
     </h1>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="card col-4 m-3" v-for="dish, index in cart" :key="dish.id">
-                {{ dish.name }}
+            <div class="card col-   4 m-3" v-for="dish, index in cart" :key="dish.id">
+                <p>
+                    NOME: {{ dish.name }}
+                </p>
+                <p>PREZZO: €{{ dish.price.toFixed(2) }}</p>
                 <button class="btn btn-danger" @click="removeFromCart(index)">
                     Elimina
                 </button>
+            </div>
+            <div class="container">
+
+                <Payments :cart="cart" />
             </div>
         </div>
     </div>
