@@ -1,13 +1,16 @@
 <script>
 import axios from 'axios';
 
+const API = "http://localhost:8000/api/v1"
 
 
 export default {
     props: ['cart'],
     data() {
         return {
-            totalAmount: 0
+            totalAmount: 0,
+            orderStatus: true,
+            braintreeInstance: null,
         };
     },
     watch: {
@@ -19,7 +22,7 @@ export default {
         }
     },
     mounted() {
-        var button = document.querySelector('#submit-button');
+        let button = document.querySelector('#submit-button');
 
         braintree.dropin.create({
             authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
@@ -42,21 +45,50 @@ export default {
             }
         },
         processPayment() {
-            // Qui va il tuo codice per processare il pagamento con Braintree
-            // Una volta che il pagamento è stato processato con successo, esegui la chiamata Axios
-            this.saveOrder();
+            let button = document.querySelector('#submit-button');
+            let self = this; // Mantieni un riferimento all'istanza Vue
+
+            braintree.dropin.create(
+                {
+                    authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
+                    selector: '#dropin-container',
+                },
+                function (err, instance) {
+                    button.addEventListener('click', function () {
+                        instance.requestPaymentMethod(function (err, payload) {
+                            console.log("Payment Method Nonce received:", payload.nonce);
+
+                            // Dopo aver ricevuto il nonce del pagamento, chiama inviaDati() per inviare i dati al backend
+                            self.inviaDati(payload.nonce);
+                        });
+                    });
+                }
+            );
         },
-        saveOrder() {
-            axios.post('/api/orders', {
-                // I tuoi dati dell'ordine qui
-            })
+        inviaDati(paymentNonce) {
+            if (isNaN(this.totalAmount) || this.totalAmount <= 0) {
+                console.error('Il totale non è un numero valido o è inferiore o uguale a zero.');
+                return;
+            }
+
+            const dati = {
+                total_amount: this.totalAmount,
+                order_status: this.orderStatus,
+            };
+
+            this.saveOrder(dati); // Chiamata a saveOrder() con i dati del pagamento
+            console.log("Dati inviati:", dati);
+        },
+        saveOrder(dati) {
+            axios.post(API + '/save_payments', dati)
                 .then(response => {
-                    // Gestisci la risposta del server
+                    console.log(response.data.messaggio);
+                    // Esegui altre azioni dopo il salvataggio
                 })
                 .catch(error => {
-                    // Gestisci l'errore
+                    console.error('Errore durante il salvataggio dei dati:', error);
                 });
-        }
+        },
     }
 
 }
@@ -65,7 +97,7 @@ export default {
     
 <template>
     <div id="dropin-container"></div>
-    <button id="submit-button" class="button button--small button--green">Purchase</button>
+    <button id="submit-button" class="button button--small button--green" @click="inviaDati()">Purchase</button>
     <h2>
         Il totale da pagare è: €{{ totalAmount.toFixed(2) }}
     </h2>
