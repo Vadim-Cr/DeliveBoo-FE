@@ -5,7 +5,10 @@ const API = "http://localhost:8000/api/v1"
 
 
 export default {
-    props: ['cart'],
+    name: 'Payments',
+    props: {
+        cart: Array
+    },
     data() {
         return {
             totalAmount: 0,
@@ -23,19 +26,37 @@ export default {
     },
     mounted() {
         let button = document.querySelector('#submit-button');
+        const self = this;
 
         braintree.dropin.create({
             authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
             selector: '#dropin-container'
         }, function (err, instance) {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function (cart) {
                 instance.requestPaymentMethod(function (err, payload) {
                     console.log("Payment Method Nonce received:", payload.nonce);
+
+                    self.calculateTotal(self.cart);
+
+                    const dati = {
+                        total_amount: self.totalAmount,
+                        order_status: self.orderStatus,
+                    };
+
+                    axios.post(API + '/save_payments', {
+                        dati: dati
+                    })
+                        .then(response => {
+                            console.log(response.data.messaggio);
+                            // Esegui altre azioni dopo il salvataggio
+                        })
+                        .catch(error => {
+                            console.error('Errore durante il salvataggio dei dati:', error);
+                        });
                 });
             });
         });
     },
-    // ... (il tuo codice esistente)
     methods: {
         calculateTotal(cart) {
             if (cart && Array.isArray(cart) && cart.length > 0) {
@@ -43,67 +64,22 @@ export default {
             } else {
                 this.totalAmount = 0;
             }
-        },
-        processPayment() {
-            let button = document.querySelector('#submit-button');
-            let self = this; // Mantieni un riferimento all'istanza Vue
-
-            braintree.dropin.create(
-                {
-                    authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
-                    selector: '#dropin-container',
-                },
-                function (err, instance) {
-                    button.addEventListener('click', function () {
-                        instance.requestPaymentMethod(function (err, payload) {
-                            console.log("Payment Method Nonce received:", payload.nonce);
-
-                            // Dopo aver ricevuto il nonce del pagamento, chiama inviaDati() per inviare i dati al backend
-                            self.inviaDati(payload.nonce);
-                        });
-                    });
-                }
-            );
-        },
-        inviaDati(paymentNonce) {
-            if (isNaN(this.totalAmount) || this.totalAmount <= 0) {
-                console.error('Il totale non è un numero valido o è inferiore o uguale a zero.');
-                return;
-            }
-
-            const dati = {
-                total_amount: this.totalAmount,
-                order_status: this.orderStatus,
-            };
-
-            this.saveOrder(dati); // Chiamata a saveOrder() con i dati del pagamento
-            console.log("Dati inviati:", dati);
-        },
-        saveOrder(dati) {
-            axios.post(API + '/save_payments', dati)
-                .then(response => {
-                    console.log(response.data.messaggio);
-                    // Esegui altre azioni dopo il salvataggio
-                })
-                .catch(error => {
-                    console.error('Errore durante il salvataggio dei dati:', error);
-                });
-        },
+        }
     }
 
 }
 </script>
 
-    
+        
 <template>
     <div id="dropin-container"></div>
-    <button id="submit-button" class="button button--small button--green" @click="inviaDati()">Purchase</button>
+    <button id="submit-button" class="button button--small button--green">Purchase</button>
     <h2>
         Il totale da pagare è: €{{ totalAmount.toFixed(2) }}
     </h2>
 </template>
-  
-  
+    
+    
 <style scoped>
 .button {
     cursor: pointer;
@@ -117,7 +93,7 @@ export default {
     border-width: 1px;
     border-radius: 3px;
     /* -webkit-appearance: none;
-    -moz-appearance: none; */
+        -moz-appearance: none; */
     display: inline-block;
 }
 
@@ -139,4 +115,4 @@ export default {
     color: white;
 }
 </style>
-  
+    
