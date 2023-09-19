@@ -90,21 +90,17 @@ export default {
                 </div>
             </div>
         </div>
-        <!-- carti piatti -->
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="card col-4 m-3" v-for="dish, idx in restaurant.dishes" :key="dish.id">
-                    <h1 class="text-center">
-                        {{ dish.name }}
-                    </h1>
-                    <img class="dishimage" :src="dish.image_path" alt="">
-                    <div>
-                        <strong>Descrizione:</strong> {{ dish.description }}
-                    </div>
-                    <div>
-                        <strong>Prezzo:</strong> €{{ dish.price }}
-                    </div>
-                    <button class="btn btn-primary" @click="addToCart(dish)"> Aggiungi al carrello </button>
+    </div>
+    <!-- card piatti -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="card col-4 m-3" v-for="dish, idx in restaurant.dishes" :key="dish.id">
+                <h1 class="text-center">
+                    {{ dish.name }}
+                </h1>
+                <img class="dishimage" :src="dish.image_path" alt="">
+                <div>
+                    <strong>Descrizione:</strong> {{ dish.description }}
                 </div>
             </div>
         </div>
