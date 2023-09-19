@@ -89,7 +89,7 @@ export default {
             </div>
         </div>
     </div>
-    <!-- carti piatti -->
+    <!-- card piatti -->
     <div class="container">
         <div class="row justify-content-center">
             <div class="card col-4 m-3" v-for="dish, idx in restaurant.dishes" :key="dish.id">

@@ -1,16 +1,23 @@
 <script>
 import axios from 'axios';
+import Braintree from './../components/Braintree.vue';
 
-const API = "http://localhost:8000/api/v1"
-
+const API_BASE_URL = "http://localhost:8000/api"; // Aggiorna l'URL base dell'API
 
 export default {
+    components: {
+        Braintree
+    },
     props: ['cart'],
     data() {
         return {
+            name: '',
+            last_name: '',
+            address: '',
+            email: '',
+            mobile_phone: '',
             totalAmount: 0,
             orderStatus: true,
-            braintreeInstance: null,
         };
     },
     watch: {
@@ -22,20 +29,8 @@ export default {
         }
     },
     mounted() {
-        let button = document.querySelector('#submit-button');
-
-        braintree.dropin.create({
-            authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
-            selector: '#dropin-container'
-        }, function (err, instance) {
-            button.addEventListener('click', function () {
-                instance.requestPaymentMethod(function (err, payload) {
-                    console.log("Payment Method Nonce received:", payload.nonce);
-                });
-            });
-        });
+        // Esegui eventuali operazioni iniziali qui
     },
-    // ... (il tuo codice esistente)
     methods: {
         calculateTotal(cart) {
             if (cart && Array.isArray(cart) && cart.length > 0) {
@@ -44,63 +39,68 @@ export default {
                 this.totalAmount = 0;
             }
         },
-        processPayment() {
-            let button = document.querySelector('#submit-button');
-            let self = this; // Mantieni un riferimento all'istanza Vue
-
-            braintree.dropin.create(
-                {
-                    authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
-                    selector: '#dropin-container',
-                },
-                function (err, instance) {
-                    button.addEventListener('click', function () {
-                        instance.requestPaymentMethod(function (err, payload) {
-                            console.log("Payment Method Nonce received:", payload.nonce);
-
-                            // Dopo aver ricevuto il nonce del pagamento, chiama inviaDati() per inviare i dati al backend
-                            self.inviaDati(payload.nonce);
-                        });
-                    });
-                }
-            );
-        },
-        inviaDati(paymentNonce) {
-            if (isNaN(this.totalAmount) || this.totalAmount <= 0) {
-                console.error('Il totale non è un numero valido o è inferiore o uguale a zero.');
-                return;
-            }
-
-            const dati = {
-                total_amount: this.totalAmount,
-                order_status: this.orderStatus,
+        async inviaDati() {
+            const customerForm = {
+                name: this.name,
+                last_name: this.last_name,
+                address: this.address,
+                email: this.email,
+                mobile_phone: this.mobile_phone
             };
 
-            this.saveOrder(dati); // Chiamata a saveOrder() con i dati del pagamento
-            console.log("Dati inviati:", dati);
-        },
-        saveOrder(dati) {
-            axios.post(API + '/save_payments', dati)
-                .then(response => {
-                    console.log(response.data.messaggio);
-                    // Esegui altre azioni dopo il salvataggio
-                })
-                .catch(error => {
-                    console.error('Errore durante il salvataggio dei dati:', error);
+            try {
+                const response = await axios.post(`${API_BASE_URL}/invia-dati`, {
+                    customerForm, // Invia i dati del cliente come parte della richiesta
+                    order: this.cart, // Invia anche il carrello come parte della richiesta
                 });
+
+                console.log(response.data); // Puoi gestire la risposta qui
+            } catch (error) {
+                console.error(error);
+            }
         },
     }
-
 }
 </script>
 
-    
 <template>
-    <div id="dropin-container"></div>
-    <button id="submit-button" class="button button--small button--green" @click="inviaDati()">Purchase</button>
-    <h2>
-        Il totale da pagare è: €{{ totalAmount.toFixed(2) }}
-    </h2>
+    <div class="container">
+        <form action="POST">
+
+            <div class="group-form m-3">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required v-model="this.name">
+            </div>
+
+            <div class="group-form m-3">
+                <label for="last_name">Cognome:</label>
+                <input type="text" id="last_name" name="last_name" required v-model="this.last_name">
+            </div>
+
+            <div class="group-form m-3">
+                <label for="address">Indirizzo:</label>
+                <input type="text" id="address" name="address" required v-model="this.address">
+            </div>
+
+            <div class="group-form m-3">
+                <label for="email">Email:</label>
+                <input type="text" id="email" name="email" required v-model="this.email">
+            </div>
+
+            <div class="group-form m-3">
+                <label for="mobile_phone">Telefono:</label>
+                <input type="text" id="mobile_phone" name="mobile_phone" required v-model="this.mobile_phone">
+            </div>
+
+            <button type="button" @click="inviaDati()">Invia</button>
+        </form>
+    </div>
+    <div>
+        <Braintree />
+        <h2>
+            Il totale da pagare è: €{{ totalAmount.toFixed(2) }}
+        </h2>
+    </div>
 </template>
   
   
