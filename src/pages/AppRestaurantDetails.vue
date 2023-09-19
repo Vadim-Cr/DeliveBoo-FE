@@ -69,50 +69,55 @@ export default {
 </script>
 
 <template>
-    <!-- card ristoranti -->
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="card col-6">
-                <h1 class="text-center">
-                    {{ restaurant.activity_name }}
-                </h1>
-                <img :src="restaurant.image_path" alt="foto">
-                <div>
-                    <strong>Indirizzo:</strong> {{ restaurant.address }}
-                </div>
-                <div>
-                    <strong>Tel:</strong> {{ restaurant.mobile_phone }}
-                </div>
-                <div>
-                    <strong>P.IVA:</strong> {{ restaurant.vat }}
+    <div class="content">
+        <!-- card ristoranti -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="card col-6">
+                    <h1 class="text-center">
+                        {{ restaurant.activity_name }}
+                    </h1>
+                    <img :src="restaurant.image_path" alt="foto">
+                    <div>
+                        <strong>Indirizzo:</strong> {{ restaurant.address }}
+                    </div>
+                    <div>
+                        <strong>Tel:</strong> {{ restaurant.mobile_phone }}
+                    </div>
+                    <div>
+                        <strong>P.IVA:</strong> {{ restaurant.vat }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- carti piatti -->
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="card col-4 m-3" v-for="dish, idx in restaurant.dishes" :key="dish.id">
-                <h1 class="text-center">
-                    {{ dish.name }}
-                </h1>
-                <img class="dishimage" :src="dish.image_path" alt="">
-                <div>
-                    <strong>Descrizione:</strong> {{ dish.description }}
+        <!-- carti piatti -->
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="card col-4 m-3" v-for="dish, idx in restaurant.dishes" :key="dish.id">
+                    <h1 class="text-center">
+                        {{ dish.name }}
+                    </h1>
+                    <img class="dishimage" :src="dish.image_path" alt="">
+                    <div>
+                        <strong>Descrizione:</strong> {{ dish.description }}
+                    </div>
+                    <div>
+                        <strong>Prezzo:</strong> €{{ dish.price }}
+                    </div>
+                    <button class="btn btn-primary" @click="addToCart(dish)"> Aggiungi al carrello </button>
                 </div>
-                <div>
-                    <strong>Prezzo:</strong> €{{ dish.price }}
-                </div>
-                <button class="btn btn-primary" @click="addToCart(dish)"> Aggiungi al carrello </button>
             </div>
         </div>
-
     </div>
     <div v-if="$route.name !== 'restaurantDetail'">
         <ShoppingCart :dishes="cart" />
     </div>
 </template>
 <style scoped>
+.content {
+    padding-top: 120px;
+}
+
 .dishimage {
     width: 200px;
     display: inline-block;
