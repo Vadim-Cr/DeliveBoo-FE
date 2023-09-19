@@ -44,11 +44,23 @@ export default {
       <i class="fa-solid fa-circle-check"></i>
       Locali che potrebbero piacerti
     </h2>
+    <!-- Checkbox per la selezione delle tipologie -->
+    <div class="container mt-2">
+      <div class="check">
+        <label
+          v-for="typology in ['Italiano', 'Cinese', 'Giapponese', 'Messicano', 'Indiano', 'Francese', 'Spagnolo', 'Tedesco', 'Americano', 'Fast-food', 'Vegetariano', 'Vegano']"
+          :key="typology" class="rounded-pill " :class="{ 'selected': selectedTypologies.includes(typology) }">
+          <input type="checkbox" :value="typology" v-model="selectedTypologies" @change="updateSearch" id="myCheckbox">
+          <strong>{{ typology }}</strong>
+        </label>
+      </div>
+    </div>
     <!-- Lista dei ristoranti -->
-    <div class="container">
+    <div class="container rist">
       <div class="row">
-        <router-link v-for="restaurant in restaurants" :to="{ name: 'restaurantDetail', params: { id: restaurant.id } }"
-          :key="restaurant.id" class="card col-4 " style="width: 18rem;">
+        <router-link v-for="   restaurant    in    restaurants   "
+          :to="{ name: 'restaurantDetail', params: { id: restaurant.id } }" :key="restaurant.id" class="card col-4 "
+          style="width: 18rem;">
           <img :src="restaurant.image_path" alt="">
           <div class="card-body">
             <strong>{{ restaurant.activity_name }}</strong>
@@ -57,24 +69,6 @@ export default {
       </div>
     </div>
   </div>
-
-  <!-- Checkbox per la selezione delle tipologie -->
-  <div class="container mt-5">
-    <div class="check">
-      <label class="rounded-pill "
-        v-for="typology in ['Italiano', 'Cinese', 'Giapponese', 'Messicano', 'Indiano', 'Francese', 'Spagnolo', 'Tedesco', 'Americano', 'Fast-food', 'Vegetariano', 'Vegano']"
-        :key="typology">
-        <input type="checkbox" :value="typology" v-model="selectedTypologies" @change="updateSearch" id="myCheckbox">
-        <strong>{{ typology }}</strong>
-      </label>
-    </div>
-  </div>
-  <svg class="waves" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
-    <path class="wavePath-haxJK1 animationPaused-2hZ4IO"
-      d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z"
-      fill="#1d1d1d">
-    </path>
-  </svg>
 </template>
 
 
@@ -87,7 +81,14 @@ a {
 
 .container {
   display: flex;
+}
 
+.container.mt-2 {
+  margin-bottom: 200px;
+}
+
+.container.rist {
+  margin-bottom: 100px;
 }
 
 .fa-circle-check {
@@ -118,10 +119,6 @@ a {
   font-size: 1.7rem;
   text-align: left;
 
-}
-
-.container.mt-5 {
-  margin-bottom: 350px;
 }
 
 img {
@@ -174,6 +171,10 @@ img {
     }
   }
 
+}
+
+label.selected {
+  background-color: #ffc244;
 }
 
 input[type="checkbox"]:checked+label::before {
