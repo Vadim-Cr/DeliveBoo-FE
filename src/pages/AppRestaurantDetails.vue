@@ -102,6 +102,10 @@ export default {
                 <div>
                     <strong>Descrizione:</strong> {{ dish.description }}
                 </div>
+                <div>
+                    <strong>Prezzo:</strong> €{{ dish.price }}
+                </div>
+                <button class="btn btn-primary" @click="addToCart(dish)"> Aggiungi al carrello </button>
             </div>
         </div>
     </div>

@@ -18,8 +18,6 @@ export default {
     <AppHero />
   </div>
   <div>
-    <router-link v-if="$route.name !== 'cart' && $route.name !== 'home'" to="/cart"><i
-        class="fa-solid fa-cart-shopping"></i></router-link>
     <router-view></router-view>
   </div>
   <AppFooter />

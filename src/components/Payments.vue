@@ -64,36 +64,54 @@ export default {
 </script>
 
 <template>
-    <div class="container">
-        <form action="POST">
+    <div class="row justify-content-start">
+        <div>
+            <div class="card">
+                <div class="card-header p-3">Inserisci i dati per effettuare l'ordine</div>
 
-            <div class="group-form m-3">
-                <label for="name">Nome:</label>
-                <input type="text" id="name" name="name" required v-model="this.name">
+                <div class="card-body">
+                    <form method="POST" class="form-group">
+
+                        <div class="w-100 d-flex justify-content-between flex-wrap">
+                            <div class="form-group mb-3">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">Nome</label>
+                                <input id="name" type="text" class="form-control" name="name" v-model="this.name" required
+                                    autofocus>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="last_name" class="col-md-4 col-form-label text-md-right">Cognome</label>
+                                <input id="last_name" type="text" class="form-control" name="last_name"
+                                    v-model="this.last_name" required autofocus>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="address" class="col-md-4 col-form-label text-md-right">Indirizzo</label>
+                                <input id="address" type="text" class="form-control" name="address" v-model="this.address"
+                                    required autofocus minlength='13' maxlength='13'>
+                            </div>
+                            <div class=" form-group mb-3">
+                                <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
+                                <input id="email" type="text" class="form-control w-50" name="email" v-model="this.email"
+                                    required autofocus minlength='13' maxlength='14'>
+                            </div>
+                            <div class=" form-group mb-3">
+                                <label for="mobile_phone" class="col-md-4 col-form-label text-md-right">Cellulare</label>
+                                <input id="mobile_phone" type="text" class="form-control w-50" name="mobile_phone"
+                                    placeholder="+39" v-model="this.mobile_phone" required autofocus minlength='13'
+                                    maxlength='14'>
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
             </div>
+        </div>
 
-            <div class="group-form m-3">
-                <label for="last_name">Cognome:</label>
-                <input type="text" id="last_name" name="last_name" required v-model="this.last_name">
-            </div>
-
-            <div class="group-form m-3">
-                <label for="address">Indirizzo:</label>
-                <input type="text" id="address" name="address" required v-model="this.address">
-            </div>
-
-            <div class="group-form m-3">
-                <label for="email">Email:</label>
-                <input type="text" id="email" name="email" required v-model="this.email">
-            </div>
-
-            <div class="group-form m-3">
-                <label for="mobile_phone">Telefono:</label>
-                <input type="text" id="mobile_phone" name="mobile_phone" required v-model="this.mobile_phone">
-            </div>
-
-            <button type="button" @click="inviaDati()">Invia</button>
-        </form>
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary my-3 m-auto" @click="inviaDati()">
+            Ordina
+        </button>
     </div>
     <div>
         <Braintree />

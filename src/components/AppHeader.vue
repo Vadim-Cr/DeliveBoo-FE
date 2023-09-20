@@ -10,25 +10,17 @@ export default {
                 <i class="fa-solid fa-location-dot"></i>
             </h1>
         </router-link>
-        <a href="http://127.0.0.1:8000/register" class="registerBtn rounded-pill text-decoration-none">
+        <a v-if="$route.name === 'home'" href="http://127.0.0.1:8000/register"
+            class="registerBtn rounded-pill text-decoration-none">
             Registrati
         </a>
+        <router-link v-if="$route.name !== 'cart' && $route.name !== 'home'" to="/cart">
+            <i class="fa-solid fa-cart-shopping"></i>
+        </router-link>
     </div>
 </template>
 <style lang="scss" scoped>
 @use './../styles/partials/variables' as *;
-
-.container-header {
-    background-color: #ffc244;
-    height: 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    z-index: 1000;
-    width: 100%;
-    padding: 20px;
-}
 
 h1 {
     color: $second-color;
