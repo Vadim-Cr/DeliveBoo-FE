@@ -40,6 +40,12 @@ export default {
 
 <template>
   <div>
+    <svg class="waves" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none">
+      <path class="wavePath-haxJK1 animationPaused-2hZ4IO"
+        d="M826.337463,25.5396311 C670.970254,58.655965 603.696181,68.7870267 447.802481,35.1443383 C293.342778,1.81111414 137.33377,1.81111414 0,1.81111414 L0,150 L1920,150 L1920,1.81111414 C1739.53523,-16.6853983 1679.86404,73.1607868 1389.7826,37.4859505 C1099.70117,1.81111414 981.704672,-7.57670281 826.337463,25.5396311 Z"
+        fill="#ffc244">
+      </path>
+    </svg>
     <h2 class="p-4">
       <i class="fa-solid fa-circle-check"></i>
       Locali che potrebbero piacerti
@@ -79,8 +85,19 @@ a {
   text-decoration: none;
 }
 
+.waves {
+  transform: rotate(180deg);
+  position: relative;
+  z-index: 1000;
+}
+
+h2 {
+  margin: 30px 0;
+}
+
 .container {
   display: flex;
+
 }
 
 .container.mt-2 {
@@ -92,7 +109,7 @@ a {
 }
 
 .fa-circle-check {
-  color: $second-color;
+  color: $green-color;
 }
 
 .row {
@@ -144,7 +161,7 @@ img {
 
 
   label {
-    margin-top: 30px;
+    margin-top: 20px;
     text-align: center;
     font-size: 1.3rem;
     font-weight: 700;

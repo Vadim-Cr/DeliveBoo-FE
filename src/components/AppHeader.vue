@@ -6,9 +6,7 @@ export default {
 <template>
     <div class="container-header">
         <router-link to="/" class="text-decoration-none">
-            <h1>Deliveboo
-                <i class="fa-solid fa-location-dot"></i>
-            </h1>
+            <h1>Deliveboo <i class="fa-solid fa-location-dot"></i></h1>
         </router-link>
         <a v-if="$route.name === 'home'" href="http://127.0.0.1:8000/register"
             class="registerBtn rounded-pill text-decoration-none">
@@ -19,30 +17,62 @@ export default {
         </router-link>
     </div>
 </template>
+  
 <style lang="scss" scoped>
 @use './../styles/partials/variables' as *;
 
-h1 {
-    color: $second-color;
-    font-weight: 900;
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
-}
+    background-color: $bg-color;
 
-.fa-location-dot {
-    font-size: 2.2rem;
-    position: relative;
-    top: -2px;
-    left: -10px;
-}
+    h1 {
+        color: $green-color;
+        font-weight: 900;
+        font-size: 1.5rem;
+        margin: 0;
+    }
 
-.registerBtn {
-    padding: 12px;
-    background-color: $second-color;
-    font-size: 1.1rem;
-    color: #fff;
+    .fa-location-dot {
+        font-size: 1.5rem;
+        position: relative;
+        top: -2px;
+        left: -5px;
+    }
 
-    &:hover {
-        box-shadow: 3px 5px 5px #fff;
+    .registerBtn {
+        padding: 8px 16px;
+        font-size: 1rem;
+        color: #fff;
+        background-color: $green-color;
+
+        &:hover {
+            box-shadow: 3px 5px 5px #fff;
+        }
+    }
+
+    @media (max-width: 768px) {
+
+
+        h1 {
+            font-size: 1.2rem;
+
+        }
+
+        .fa-location-dot {
+            font-size: 1rem;
+
+        }
+
+        .registerBtn {
+            padding: 6px 12px;
+
+            font-size: 0.9rem;
+
+        }
     }
 }
 </style>
+  
