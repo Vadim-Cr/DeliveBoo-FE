@@ -1,14 +1,12 @@
 <script>
 import axios from 'axios';
-import Braintree from './../components/Braintree.vue';
 
 const API_BASE_URL = "http://localhost:8000/api"; // Aggiorna l'URL base dell'API
 
 export default {
-    components: {
-        Braintree
+    props: {
+        cart: Array
     },
-    props: ['cart'],
     data() {
         return {
             name: '',
@@ -29,7 +27,18 @@ export default {
         }
     },
     mounted() {
-        // Esegui eventuali operazioni iniziali qui
+        let button = document.querySelector('#submit-button');
+
+        braintree.dropin.create({
+            authorization: 'sandbox_g42y39zw_348pk9cgf3bgyw2b',
+            selector: '#dropin-container'
+        }, function (err, instance) {
+            button.addEventListener('click', function () {
+                instance.requestPaymentMethod(function (err, payload) {
+                    console.log("Payment Method Nonce received:", payload.nonce);
+                });
+            });
+        });
     },
     methods: {
         calculateTotal(cart) {
@@ -39,26 +48,29 @@ export default {
                 this.totalAmount = 0;
             }
         },
-        async inviaDati() {
+        inviaDati() {
             const customerForm = {
                 name: this.name,
                 last_name: this.last_name,
                 address: this.address,
                 email: this.email,
-                mobile_phone: this.mobile_phone
+                mobile_phone: this.mobile_phone,
+                total_amount: this.totalAmount.toFixed(2),
+                order_status: this.orderStatus,
+                restaurant_id: this.cart[0].restaurant_id
             };
 
-            try {
-                const response = await axios.post(`${API_BASE_URL}/invia-dati`, {
-                    customerForm, // Invia i dati del cliente come parte della richiesta
-                    order: this.cart, // Invia anche il carrello come parte della richiesta
+            axios
+                .post(`${API_BASE_URL}/invia-dati`, customerForm)
+                .then(response => {
+                    response.data = customerForm;
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
                 });
+        }
 
-                console.log(response.data); // Puoi gestire la risposta qui
-            } catch (error) {
-                console.error(error);
-            }
-        },
     }
 }
 </script>
@@ -96,8 +108,8 @@ export default {
                             <div class=" form-group mb-3">
                                 <label for="mobile_phone" class="col-md-4 col-form-label text-md-right">Cellulare</label>
                                 <input id="mobile_phone" type="text" class="form-control w-50" name="mobile_phone"
-                                    placeholder="+39" v-model="this.mobile_phone" required autofocus minlength='13'
-                                    maxlength='14'>
+                                    placeholder="+39" v-model="this.mobile_phone" required autofocus minlength='10'
+                                    maxlength='10'>
 
                             </div>
                         </div>
@@ -108,13 +120,9 @@ export default {
         </div>
 
     </div>
-    <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary my-3 m-auto" @click="inviaDati()">
-            Ordina
-        </button>
-    </div>
+    <div id="dropin-container"></div>
+    <button id="submit-button" class="button button--small button--green" @click="inviaDati()">Invia ordine</button>
     <div>
-        <Braintree />
         <h2>
             Il totale da pagare è: €{{ totalAmount.toFixed(2) }}
         </h2>
