@@ -14,7 +14,7 @@ export default {
             class="registerBtn rounded-pill text-decoration-none">
             Registrati
         </a>
-        <router-link v-if="$route.name !== 'cart' && $route.name !== 'home'" to="/cart">
+        <router-link v-if="$route.name !== 'cart' && $route.name !== 'home' && $route.name !== 'thankYou'" to="/cart">
             <i class="fa-solid fa-cart-shopping"></i>
         </router-link>
     </div>

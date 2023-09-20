@@ -24,10 +24,10 @@ const router = createRouter({
             component: AppRestaurantDetails
         },
         {
-            path: '/thank-you',
-            name: 'ThankYou',
+            path: '/thank_you',
+            name: 'thankYou',
             component: ThankYou,
-            props: route => ({ customerForm: route.params.customerForm })
+            props: true
         }
 
     ]
