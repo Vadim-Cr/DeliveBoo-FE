@@ -49,7 +49,7 @@ export default {
 
 <template>
     <h1 class="text-center">
-        Shopping Cart
+        Carrello
     </h1>
     <div class="container">
         <div class="row justify-content-center">
@@ -63,10 +63,13 @@ export default {
                 </button>
             </div>
             <div class="container">
-
                 <Payments :cart="cart" />
             </div>
         </div>
     </div>
 </template>
-<style scoped></style>
+<style scoped>
+h1 {
+    margin-top: 95px;
+}
+</style>

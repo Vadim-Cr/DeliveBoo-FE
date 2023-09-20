@@ -102,6 +102,7 @@ export default {
                 <div>
                     <strong>Descrizione:</strong> {{ dish.description }}
                 </div>
+                <div class="btn btn-primary w-25" @click="addToCart(dish)">+</div>
             </div>
         </div>
     </div>

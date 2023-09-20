@@ -5,3 +5,17 @@
     font-family: 'Nunito', sans-serif;
 
 }
+
+.container-header {
+    background-color: #ffc244;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
