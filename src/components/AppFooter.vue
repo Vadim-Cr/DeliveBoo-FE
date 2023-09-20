@@ -14,17 +14,101 @@ export default {
         <h2>Deliveboo
             <i class="fa-solid fa-location-dot"></i>
         </h2>
+
+        <div class="details-footer">
+            <div>
+                <h5>CHI SIAMO</h5>
+                <ul>
+                    <li><a href="#">Informazioni</a></li>
+                    <li><a href="#">Storia</a></li>
+                    <li><a href="#">Valori</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>CREATORS</h5>
+                <li><a href="#">Alessandra Spalla</a></li>
+                <li><a href="#">Giulia Bruno</a></li>
+                <li><a href="#">Vadim Crudu</a></li>
+                <li><a href="#">Simone Saladino</a></li>
+                <li><a href="#">Zakaria El Haoudi</a></li>
+            </div>
+            <div>
+                <h5>CONTATTI</h5>
+                <li>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                </li>
+            </div>
+            <div>
+                <h5>NOTE LEGALI</h5>
+                <li>
+                    <a href="#">Termini & Condizioni</a>
+                </li>
+                <li>
+                    <a href="#">Privacy</a>
+                </li>
+                <li>
+                    <a href="#">Cookies</a>
+                </li>
+            </div>
+        </div>
+
+        <h6>Copyright © 2023 Deliveboo Tutti i diritti riservati</h6>
     </div>
 </template>
 <style lang="scss" scoped>
 @use './../styles/partials/variables' as *;
 
+.waves {
+    margin-top: 70px;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+}
+
 .footer {
     color: #fff;
-    height: 400px;
+    height: 300px;
     background-color: #1d1d1d;
-    padding: 20px;
+    padding: 10px;
     padding-left: 20px;
+    position: relative;
 
+    h2 {
+        position: relative;
+        margin-top: -30px;
+        color: $green-color;
+    }
+
+    .details-footer {
+        display: flex;
+        justify-content: space-around;
+        padding-top: 30px;
+
+        ul {
+            padding-left: 0;
+
+        }
+
+        li {
+            list-style-type: none;
+
+            i {
+                margin: 0 5px;
+                font-size: 1.4rem;
+
+            }
+        }
+
+    }
+
+    h6 {
+        position: absolute;
+        bottom: 15px;
+        left: 20px;
+    }
 }
 </style>

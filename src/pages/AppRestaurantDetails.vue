@@ -69,58 +69,144 @@ export default {
 </script>
 
 <template>
-    <div class="content">
-        <!-- card ristoranti -->
-        <div class="container">
+    <section class="dish">
+        <div class="content">
+            <!-- card ristoranti -->
+            <div class="container-ristorante">
+                <div class="row">
+                    <div class="card mb-3 text-center">
+                        <h1>
+                            {{ restaurant.activity_name }}
+                        </h1>
+                        <div class="card-text">
+                            <div>
+                                <h4><strong>{{ restaurant.address }}</strong></h4>
+                            </div>
+                            <div>
+                                <h4>
+                                    <i class="fa-solid fa-phone"></i>
+                                    {{ restaurant.mobile_phone }}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1 class="text-center">
+            Menu
+        </h1>
+        <!-- card piatti -->
+        <div class="container-piatti">
             <div class="row justify-content-center">
-                <div class="card col-6">
-                    <h1 class="text-center">
-                        {{ restaurant.activity_name }}
-                    </h1>
-                    <img :src="restaurant.image_path" alt="foto">
-                    <div>
-                        <strong>Indirizzo:</strong> {{ restaurant.address }}
+                <div class="card rounded col-lg-4 col-md-5 col-sm-10" v-for="dish, idx in restaurant.dishes" :key="dish.id">
+                    <div class="card-image">
+                        <img class="dishimage" :src="dish.image_path" alt="">
                     </div>
-                    <div>
-                        <strong>Tel:</strong> {{ restaurant.mobile_phone }}
-                    </div>
-                    <div>
-                        <strong>P.IVA:</strong> {{ restaurant.vat }}
+                    <div class="bg p-2">
+                        <h4>
+                            {{ dish.name }}
+                        </h4>
+                        <div>
+                            {{ dish.description }}
+                        </div>
+                        <div class="d-flex ">
+                            <h5>€{{ dish.price }}</h5>
+                            <a class="text-decoration-none" @click="addToCart(dish)">
+                                <i class="fa-solid fa-cart-plus"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- card piatti -->
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="card col-4 m-3" v-for="dish, idx in restaurant.dishes" :key="dish.id">
-                <h1 class="text-center">
-                    {{ dish.name }}
-                </h1>
-                <img class="dishimage" :src="dish.image_path" alt="">
-                <div>
-                    <strong>Descrizione:</strong> {{ dish.description }}
-                </div>
-                <div>
-                    <strong>Prezzo:</strong> €{{ dish.price }}
-                </div>
-                <button class="btn btn-primary" @click="addToCart(dish)"> Aggiungi al carrello </button>
-            </div>
-        </div>
-    </div>
+    </section>
     <div v-if="$route.name !== 'restaurantDetail'">
         <ShoppingCart :dishes="cart" />
     </div>
 </template>
-<style scoped>
+<style lang="scss" scoped>
+@use './../styles/partials/variables' as *;
+
 .content {
-    padding-top: 120px;
+    margin-top: 100px;
 }
 
-.dishimage {
-    width: 200px;
-    display: inline-block;
-    margin: 10px auto;
+.container-ristorante {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    border: hidden;
+}
+
+
+
+.container-piatti {
+    display: flex;
+    justify-content: space-around;
+
+    .card {
+        border-radius: 20px;
+        margin-bottom: 30px;
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+
+            img {
+                border-radius: 20px 20px 0 0;
+                width: 100%;
+                height: 100%;
+            }
+
+        }
+
+        .bg {
+            background-color: #ffe2af;
+            border-radius: 0 0 20px 20px;
+            height: 130px;
+            position: relative;
+
+            h4 {
+                margin-bottom: 0;
+            }
+
+            a {
+                font-size: 1.5rem;
+                margin-left: 7px;
+                cursor: pointer;
+                color: $green-color;
+            }
+
+            .d-flex {
+                height: 40px;
+                align-items: center;
+                position: absolute;
+                right: 10px;
+                bottom: 5px;
+
+                h5 {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+
+}
+
+
+button {
+    width: 100px;
+    height: 50px;
+    background-color: #00846b;
+}
+
+img {
+    width: 100%;
+    object-fit: cover;
 }
 </style>
