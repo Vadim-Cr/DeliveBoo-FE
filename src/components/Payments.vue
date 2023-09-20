@@ -9,13 +9,15 @@ export default {
     },
     data() {
         return {
-            name: '',
-            last_name: '',
-            address: '',
-            email: '',
-            mobile_phone: '',
-            totalAmount: 0,
-            orderStatus: true,
+            customerForm: {
+                name: '',
+                last_name: '',
+                address: '',
+                email: '',
+                mobile_phone: '',
+                totalAmount: 0,
+                orderStatus: true,
+            }
         };
     },
     watch: {
@@ -63,6 +65,8 @@ export default {
             axios
                 .post(`${API_BASE_URL}/invia-dati`, customerForm)
                 .then(response => {
+                    // Naviga alla nuova pagina con i dati dell'ordine come parametri
+                    this.$router.push({ name: 'ThankYou', params: { customerForm } });
                     response.data = customerForm;
                     console.log(response.data);
                 })

@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import AppRestaurantDetails from './pages/AppRestaurantDetails.vue';
 import QueryRestaurants from './components/QueryRestaurants.vue';
 import ShoppingCart from './components/ShoppingCart.vue';
+import ThankYou from './components/ThankYou.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -21,7 +22,14 @@ const router = createRouter({
             path: '/restaurant_typology/:id',
             name: 'restaurantDetail',
             component: AppRestaurantDetails
+        },
+        {
+            path: '/thank-you',
+            name: 'ThankYou',
+            component: ThankYou,
+            props: route => ({ customerForm: route.params.customerForm })
         }
+
     ]
 });
 
