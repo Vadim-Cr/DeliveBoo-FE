@@ -31,7 +31,7 @@ export default {
     h1 {
         color: $green-color;
         font-weight: 900;
-        font-size: 1.5rem;
+        font-size: 2.5rem;
         margin: 0;
     }
 
@@ -57,7 +57,7 @@ export default {
 
 
         h1 {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
 
         }
 

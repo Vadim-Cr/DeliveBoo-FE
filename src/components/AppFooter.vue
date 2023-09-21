@@ -60,13 +60,14 @@ export default {
 <style lang="scss" scoped>
 @use './../styles/partials/variables' as *;
 
-.waves {
-    margin-top: 70px;
-}
 
 a {
     text-decoration: none;
     color: #fff;
+}
+
+.waves {
+    margin-top: 70px;
 }
 
 .footer {

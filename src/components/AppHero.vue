@@ -5,10 +5,10 @@ export default {
 </script>
 <template>
     <div class="hero">
-        <div class="hero-img burger">
+        <div class="hero-img burger none">
             <img src="/public/burger-hero.jpg" alt="">
         </div>
-        <div class="hero-text">
+        <div class="hero-text col-5">
             <h2>
                 <strong>
                     Deliveboo , il piacere del cibo senza uscire di casa
@@ -16,7 +16,7 @@ export default {
             </h2>
 
         </div>
-        <div class="hero-img sushi">
+        <div class="hero-img sushi none">
             <img src="/public/sushi-hero.png" alt="">
         </div>
     </div>
@@ -25,21 +25,19 @@ export default {
 @use './../styles/partials/variables' as *;
 
 .hero {
+    width: 100vw;
+    overflow: hidden;
     height: 600px;
     background-color: $bg-color;
     padding-top: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     position: relative;
 
 
     .hero-img {
-        width: 40%;
         z-index: 998;
-        //   position: absolute;
-        //   top: 0;
-        //   left: 40%;
 
         img {
             object-fit: cover;
@@ -53,14 +51,10 @@ export default {
 
     .burger {
         position: relative;
-        left: -300px;
-
     }
 
     .sushi {
         position: relative;
-        right: -200px;
-
     }
 
     .hero-text {
@@ -74,6 +68,30 @@ export default {
 
         }
 
+    }
+}
+
+@media (max-width: 991px) {
+    .sushi {
+        display: none;
+    }
+
+    .burger {
+        margin-left: -400px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .sushi,
+    .burger {
+        display: none;
+    }
+
+    .hero-text {
+        font-size: 3rem;
+        font-weight: bolder;
+        width: 80vw;
     }
 }
 </style>

@@ -91,7 +91,7 @@ a {
 .waves {
   transform: rotate(180deg);
   position: relative;
-  z-index: 1000;
+  z-index: 999;
 }
 
 h2 {
@@ -209,5 +209,17 @@ input[type="checkbox"] {
   position: absolute;
   left: -9999px;
 
+}
+
+@media (max-width:991px) {
+  .container.mt-2 {
+    margin-bottom: 290px;
+  }
+}
+
+@media (max-width:766px) {
+  .container.mt-2 {
+    margin-bottom: 400px;
+  }
 }
 </style>
