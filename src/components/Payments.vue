@@ -52,7 +52,7 @@ export default {
 </script>
 
 <template>
-    <div class="row justify-content-start">
+    <div>
         <div class="container-card">
             <div class="card">
                 <div class="card-header p-3 text-center"><strong>Inserisci i dati per effettuare l'ordine</strong></div>
@@ -141,7 +141,8 @@ export default {
 
 
 .card {
-    width: 60%;
+    width: 70%;
+
 
 }
 
@@ -155,6 +156,10 @@ export default {
 .container-card {
     display: flex;
     justify-content: center;
+
+    .card {
+        align-self: flex-end;
+    }
 }
 </style>
     
