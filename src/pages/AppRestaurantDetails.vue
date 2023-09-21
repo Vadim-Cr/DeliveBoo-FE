@@ -94,7 +94,7 @@ export default {
             </div>
         </div>
         <h1 class="text-center">
-            Menu
+            Menù
         </h1>
         <!-- card piatti -->
         <div class="container-piatti">
@@ -128,8 +128,13 @@ export default {
 <style lang="scss" scoped>
 @use './../styles/partials/variables' as *;
 
+.dish {
+    background-color: #e9f8f5;
+    padding: 30px;
+}
+
 .content {
-    margin-top: 100px;
+    margin-top: 80px;
 }
 
 .container-ristorante {
@@ -140,6 +145,8 @@ export default {
 
 .card {
     border: hidden;
+    background-color: #e9f8f5;
+
 }
 
 
