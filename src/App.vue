@@ -28,7 +28,7 @@ export default {
 @use './styles/partials/variables' as *;
 
 .fa-cart-shopping {
-  color: $second-color;
+  color: $green-color;
   font-size: 1.5rem;
   position: absolute;
   right: 20px;
