@@ -17,7 +17,8 @@ export default {
             restaurant: {
                 dishes: []
             },
-            cart: []
+            cart: [],
+            image_url: "http://127.0.0.1:8000/storage/"
         }
     },
     methods: {
@@ -101,7 +102,8 @@ export default {
             <div class="row justify-content-center">
                 <div class="card rounded col-lg-4 col-md-5 col-sm-10" v-for="dish, idx in restaurant.dishes" :key="dish.id">
                     <div class="card-image">
-                        <img class="dishimage" :src="dish.image_path" alt="">
+                        <!-- <img class="dishimage" :src="dish.image_path" alt=""> -->
+                        <img class="dishimage" :src="image_url + dish.image_path" :alt="dish.name">
                     </div>
                     <div class="bg p-2">
                         <h4>

@@ -15,6 +15,7 @@ export default {
         return {
             cart: [],
             totalAmount: 0,
+            image_url: "http://127.0.0.1:8000/storage/"
         };
     },
     watch: {
@@ -65,7 +66,7 @@ export default {
                     <div class="details-order">
                         <div>
                             <span>
-                                <img :src="dish.image_path" alt="">
+                                <img class="dishimage" :src="image_url + dish.image_path" :alt="dish.name">
                             </span>
                             <span>
                                 <strong>{{ dish.name }}</strong>

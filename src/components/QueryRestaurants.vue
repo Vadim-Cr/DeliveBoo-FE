@@ -4,12 +4,14 @@ import axios from 'axios';
 
 const API = "http://localhost:8000/api/v1";
 
+
 export default {
   name: 'QueryRestaurants',
   data: function () {
     return {
       restaurants: [],
-      selectedTypologies: [] // Aggiungere questo per tenere traccia delle tipologie selezionate
+      selectedTypologies: [], // Aggiungere questo per tenere traccia delle tipologie selezionate
+      image_url: "http://127.0.0.1:8000/storage/"
     };
   },
   mounted() {
@@ -67,7 +69,8 @@ export default {
         <router-link v-for="   restaurant    in    restaurants   "
           :to="{ name: 'restaurantDetail', params: { id: restaurant.id } }" :key="restaurant.id" class="card col-4 "
           style="width: 18rem;">
-          <img :src="restaurant.image_path" alt="">
+          <!-- <img :src="restaurant.image_path" alt=""> -->
+          <img :src="image_url + restaurant.image_path" :alt="restaurant.restaurant_name">
           <div class="card-body">
             <strong>{{ restaurant.activity_name }}</strong>
           </div>
