@@ -127,7 +127,7 @@ h2 {
   border: hidden;
   height: 140px;
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: 45px;
 }
 
 
